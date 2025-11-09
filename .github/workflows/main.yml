@@ -1,0 +1,16 @@
+name: "Build jass.db"
+on:
+  pull_request:
+  push:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5
+    - uses: cachix/install-nix-action@v31
+    - run: nix build
+    - run: cp result/jass.db ./jass.db
+    - uses: actions/upload-artifact@v4
+      with:
+        name: jassdb
+        path: jass.db
